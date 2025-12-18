@@ -177,7 +177,7 @@ input[type="text"]{
     height: 55px;
     text-align: center;
     margin-bottom:  100px;
-    border: solid 2px #21FF91;
+    border: solid 5px #CBF720;
     font-family: Poppins, sans-serif;
 
 }
@@ -226,4 +226,27 @@ button:hover
 input[type="radio"]{
     margin-bottom: 50px;
     height: auto;
+    size: 50px;
+}
+
+.container1:hover{
+    color: #CBF720;
+    text-shadow: 0 0 10px #CBF720;
+    transition: all 0.3s ease-in-out;
+}
+
+footer{
+    margin-top: auto;
+    padding: 10px;
+    font-size: 30px;
+    color: white;
+    text-shadow: 0 0 5px white;
+}
+
+.container67{
+    cursor: pointer;
+    font-size: 30px;
+    margin-right: 40px;
+    font-weight: bold;
+    outline: #145404;
 }
