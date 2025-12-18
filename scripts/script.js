@@ -1,47 +1,95 @@
-// Déclaration des tableaux contenant les listes des mots proposés à l'utilisateur
+/*********************************************************************************
+ * 
+ * Ce fichier contient toutes les fonctions nécessaires au fonctionnement du jeu. 
+ * 
+ *********************************************************************************/
 
-function jouer() {
+/**
+ * Cette fonction affiche dans la console le score de l'utilisateur
+ * @param {number} score : le score de l'utilisateur
+ * @param {number} nbMotsProposes : le nombre de mots proposés à l'utilisateur
+ */
+function afficherResultat(score, nbMotsProposes) {
+    // Récupération de la zone dans laquelle on va écrire le score
+    let spanScore = document.querySelector(".zoneScore span")
+    // Ecriture du texte
+    let affichageScore = `${score} / ${nbMotsProposes}` 
+    // On place le texte à l'intérieur du span. 
+    spanScore.innerText = affichageScore
+}
+
+function afficherProposition(proposition) {
+    let zoneProposition = document.querySelector(".zoneProposition")
+    zoneProposition.innerText = proposition
+}
+
+/**
+ * Cette fonction lance le jeu. 
+ * Elle demande à l'utilisateur de choisir entre "mots" et "phrases" et lance la boucle de jeu correspondante
+ */
+function lancerJeu() {
+    // Initialisations
     let score = 0
-    demanderChoixUtilisateur()
+    let i = 0
+
+    let baliseMot = document.querySelectorAll('input[name="optionSource"]')
+    let btnValiderMot = document.getElementById("btnValiderMot")
+    let inputEcriture = document.getElementById("inputEcriture")
+    document.addEventListener('DOMContentLoaded', () => {
+        const optionRadios = document.querySelectorAll('input[name="optionSource"]');
+        optionRadios.forEach(radio => {
+             radio.addEventListener('change', () => {
+            // reload the page to apply the new selection
+                window.location.reload();
+            });
+        });
+    });
+
+
+if (baliseMot[0].checked) {
     
-}
-
-function afficherResultat(score, total) {
-    console.log("Votre score est de " + score + " sur " + total)
-}
-
-function demanderChoixUtilisateur() {
-    choix = prompt("Avec quelle liste désirez-vous jouer : 'mots' ou 'phrases' ?")
-    lancerBoucle()
-    while (choix !== "mots" && choix !== "phrases") {
-    choix = prompt("Avec quelle liste désirez-vous jouer : 'mots' ou 'phrases' ?")
-}
-}
-
-function lancerBoucle() {
-    if (choix === "mots") {
-        let score = 0
-    // On parcourt le tableau des mots
-    for (let i = 0; i < listeMots.length; i++) {
-        // On demande à l'utilisateur de saisir le mot correspondant à l'indice i
-        let motUtilisateur = prompt("Entrez le mot : " + listeMots[i])
-        if (motUtilisateur === listeMots[i]) {
-            // Si le mot saisi par l'utilisateur est correct, on incrémente le score
+    afficherProposition(listeMots[i])
+    btnValiderMot.addEventListener("click", () => {
+        console.log(inputEcriture.value)
+        if (inputEcriture.value === listeMots[i]) {
             score++
         }
-    }
-    afficherResultat(score, listeMots.length)
+        i++
+        afficherResultat(score, i)
+        inputEcriture.value = ''
+        if (listeMots[i] === undefined) {
+            afficherProposition("Le jeu est fini")
+            btnValiderMot.disabled = true
+        } else {
+            afficherProposition(listeMots[i])
+        }
+        
+    })
 } else {
-    let score = 0
-    // On parcourt le tableau des phrases
-    for (let i = 0; i < listePhrases.length; i++) {
-        // On demande à l'utilisateur de saisir la phrase correspondant à l'indice i
-        let phraseUtilisateur = prompt("Entrez la phrase : " + listePhrases[i])
-        if (phraseUtilisateur === listePhrases[i]) {
-            // Si la phrase saisi par l'utilisateur est correct, on incrémente le score
-            score++
+    if (baliseMot[1].checked) {
+
+        afficherProposition(listePhrases[i])
+        btnValiderMot.addEventListener("click", () => {
+            console.log(inputEcriture.value)
+            if (inputEcriture.value === listePhrases[i]) {
+                score++
+            
+            }
+        i++
+        afficherResultat(score, i)
+        inputEcriture.value = ''
+        if (listePhrases[i] === undefined) {
+            afficherProposition("Le jeu est fini")
+            btnValiderMot.disabled = true
+        } else {
+            afficherProposition(listePhrases[i])
         }
-    }
-    afficherResultat(score, listePhrases.length)
+        
+    })
+
+
+    
+    afficherResultat(score, i)
+}
 }
 }
